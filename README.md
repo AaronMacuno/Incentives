@@ -26,7 +26,8 @@ To fix this problem we can add '*__encoding='latin-1'__*' in our code
 data = pd.read_csv('spotify-2023.csv', encoding='latin-1')
 data
 ```
-![Screenshot 2024-11-07 052130](https://github.com/user-attachments/assets/d9f2ce5d-9b23-4410-bd15-fe822e043d51)
+![image](https://github.com/user-attachments/assets/a6336aa8-1af8-4290-9c84-1db2c7a2019c)
+
 
 To display the size of the whole Dataset we can use the .shape function
 ```python
@@ -199,3 +200,63 @@ Basing on the visualization from the graphs, it is very clear that ever since 20
 Moreover, for the tracks released by an artist, it is visible from the graph that the most released track are from solo artists.
 
 ## Top Performers
+
+To display the top 5 most streamed tracks in the Dataset and to indentify which is the most streamed of the all we can use this block of code
+
+We first remove all the commas and convert all the values inside the column 'streams', then proceed to sort the column to find the top 5 most streame tracks.
+
+```python
+data['streams'] = pd.to_numeric(data['streams'].astype(str).str.replace(',', ''), errors='coerce')
+streams_df = data.nlargest(5, 'streams').reset_index(drop=True)
+streams_df
+```
+![image](https://github.com/user-attachments/assets/07df5e33-d511-4d4c-810f-8d04d7d22ebb)
+To indentify the top 5 most frequent artist based in the number of tracks in the Dataset, we can use this code to breakdown and split the values inside the column to count each artist separately. Without this, a inaccurate count of artist will be made due to collaborations of artists and such
+
+```python
+artists = data['artist(s)_name'].str.split(', ').explode().value_counts().head(5)
+artists_df = top_artists.reset_index()
+artists_df.columns = ['Artist', 'Track Count']
+artists_df.set_index('Artist')
+artists_df
+```
+![image](https://github.com/user-attachments/assets/bf426486-16f7-4b09-8dc6-58626f34c241)
+## Temporal Trends
+To analyze the trend in the graph, we can utilize __matplotlib__ once again with this block of code to see the Distribution of Tracks released by year
+
+```python
+tracks_per_year = data['released_year'].value_counts().sort_index()
+plt.figure(figsize=(20, 6))
+tracks_per_year.plot(kind='area', color='lightpink')
+plt.title('Distribution of Tracks by Released Year', fontsize=20, fontweight='bold', color='hotpink')
+plt.xlabel('Year', fontsize=14, fontweight='bold', color='lightpink')
+plt.ylabel('Number of Tracks', fontsize=14, fontweight='bold', color='lightpink')
+plt.xticks(fontsize=14, fontweight='bold', color='hotpink')
+plt.yticks(fontsize=14, fontweight='bold', color='hotpink')
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/8ef81bb5-ef55-4970-a555-254fa33ae2c8)
+
+This shows that there has been a skyrocket in releasing of tracks during the 2020s
+
+Moreover, we also graphed the tracks released per month to see any noticable patterns in the column.
+
+```python
+month = data['released_month'].value_counts().sort_index()
+plt.figure(figsize=(15, 7))
+plt.bar(month.index, month.values, color='lightpink')
+plt.title('Number of Tracks Released per Month', fontsize=16, fontweight='bold', color='hotpink')
+plt.xlabel('Month', fontsize=14, fontweight='bold', color='lightpink')
+plt.ylabel('Number of Tracks', fontsize=14, fontweight='bold', color='lightpink')
+plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],fontsize=16, fontweight='bold', color='hotpink')
+plt.yticks(fontsize=16, fontweight='bold',color='hotpink')
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/a757949f-70ac-4db3-a278-91e4f3e527ed)
+
+During the months of January and May has the tracks released, this might be because of the effects of a newer year for January and the early start of summer for May.
+
+## Genre and Music Characteristics
+
+
+
