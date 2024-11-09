@@ -309,4 +309,6 @@ plt.show()
 ### Summary
 As can be seen in the graph above, the platform that favors the most popular tracks is __Spotify__. This is most probably because of Spotify's catering of other services such as audiobooks and podcasts rather than just music all in one app.
 
+## Advanced Analysis
+
 
