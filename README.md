@@ -1,6 +1,12 @@
-# Incentives
+# Exploratory Data Analysis on Spotify 2023 Dataset
+## Submitted by: MACUNO, Aaron Josh F. <br> 2ECE-A
 
-# Activity
+## Guidelines
+__1.__ Begin by familiarizing yourself with the structure of the dataset. Check for missing values and data types, and perform an initial exploration to understand the different features available.<br>
+__2.__ Provide summary statistics to give an overview of key metrics such as the number of streams, release dates, and musical attributes (e.g., BPM, danceability).<br>
+__3.__ Use appropriate visualizations (e.g., bar charts, histograms, scatter plots) to uncover trends and patterns in the data. Ensure that your plots are well-labeled and easy to interpret.<br>
+__4.__ Investigate correlations between different variables and provide insights based on your findings. Explore relationships between streams and other musical characteristics like tempo, energy, or playlists.<br>
+__5.__ Based on your analysis, offer any insights or recommendations regarding the tracks, artists, or musical trends that could be useful for understanding what makes a track popular.<br>
 
 ## Overview of Dataset
 _**Importing**_ these libraries is crucial to creating an output with clear visualization of data
@@ -350,6 +356,9 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/86d1dd35-edd8-4e13-a379-5494922f8a04)
 
 From this plot we can see that the Weekend takes the highest spot while Taylor Swift and Ed Sheeran are just closely tailing behind.
+
+## Insights
+In conclusion, this project has been a great help with highlighting factors such us track popularities, genres, keys, charts, distribution, and much more. For certain indiviuals, these findings are crucial and valuable user data that can be used to create a better platform overall in the future. The EDA project displayed trends back in 2023 that can be used by programmers to deliver better advertisments and recommendation to its consumers.
 
 
 
