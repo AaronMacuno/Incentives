@@ -310,5 +310,47 @@ plt.show()
 As can be seen in the graph above, the platform that favors the most popular tracks is __Spotify__. This is most probably because of Spotify's catering of other services such as audiobooks and podcasts rather than just music all in one app.
 
 ## Advanced Analysis
+To identify the tracks with the same keys/mode in both Minor and Major, we can use a bar graph once more for visualization
+```python
+key_mode_counts = data.groupby(['key', 'mode']).size().reset_index(name='Count')
+plt.figure(figsize=(20, 8))
+pink_palette = ['#FF69B4', '#FF1493', '#FF66CC', '#FFB6C1']
+sns.barplot(data=key_mode_counts, x='key', y='Count', hue='mode', palette=pink_palette, dodge=False)
+plt.title('Distribution of Tracks by Key & Mode', fontsize=16, fontweight='bold')
+plt.xlabel('Key', fontsize=14)
+plt.ylabel('Number of Tracks', fontsize=14)
+plt.xticks(color='gray')
+plt.yticks(color='gray')
+plt.legend(title='Mode', title_fontsize='15', fontsize='13', loc='upper left')
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/f5e4eb76-a31d-4ec7-bd77-9ced4911377a)
+
+Based on the visible graph, we can see that __C#__ has the most distribution among the Minors with E closely behind it. __C#__ also has the most distribution among the Major with D just right behind it <br>
+Moreover, we can see that __D__ has the lowest Minor while __A__ has the lowest Major
+
+We can also plot a graph to reveal the most frequent appearing artist in the playlist/charts
+```python
+platform_columns = ['in_spotify_playlists', 'in_spotify_charts', 'in_apple_playlists', 'in_apple_charts', 'in_deezer_playlists', 'in_deezer_charts']
+
+data[platform_columns] = data[platform_columns].apply(pd.to_numeric, errors='coerce')
+artist_counts = data.groupby("artist(s)_name")[platform_columns].sum().sum(axis=1).sort_values(ascending=False)
+top_artists = artist_counts.head(10).reset_index()
+top_artists.columns = ['Artist', 'Appearances']
+
+plt.figure(figsize=(20, 7))
+sns.barplot(data=top_artists, x='Artist', y='Appearances', hue='Artist', dodge=False, palette=pink_palette, legend=False)
+plt.title('Top 10 Most Frequently Appearing Artists in Playlists/Charts', fontsize=20, fontweight='bold', color='hotpink')
+plt.xlabel('Artist', fontsize=14)
+plt.ylabel('Appearances in Playlists/Charts', fontsize=14)
+plt.xticks(color='gray')
+plt.yticks(color='gray')
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/86d1dd35-edd8-4e13-a379-5494922f8a04)
+
+From this plot we can see that the Weekend takes the highest spot while Taylor Swift and Ed Sheeran are just closely tailing behind.
+
+
 
 
