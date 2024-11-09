@@ -258,5 +258,55 @@ During the months of January and May has the tracks released, this might be beca
 
 ## Genre and Music Characteristics
 
+To find the correlation between streams and musical attributes we first have to graph it for visualization. In here we utilized seaborn's heatmap instead of matplotlib for a change.
+
+```python
+clean = data[['streams', 'bpm', 'danceability_%', 'energy_%', 'valence_%', 'acousticness_%']].dropna()
+correlation_matrix = clean.corr()
+plt.figure(figsize=(20, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap="RdPu", fmt='.2f', linewidths=1, linecolor='black', cbar_kws={'shrink': 0.8}, annot_kws={'size': 15, 'weight': 'bold'}, vmin=-1, vmax=1)
+plt.title('Correlation Matrix Between Streams and Musical Attributes', fontsize=18, fontweight='bold')
+plt.tight_layout()
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/991038dc-004d-4d45-aa12-9192980e1b5d)
+
+### Summary
+According to the heatmap above, there are no attributes that has a positive correlation with stream for it is either negative or zero.
+
+For danceability and energy, both showed a __0.20__ value with each other showig a positive correlation. This shows that when one increases to 0.20 the other one also increases to 0.20
+
+For valance and acousticness, both showed a __-0.08__ value with each other showing a negative correlation. This also shows that when valance decreases to -0.08, the same thing also happens to acousticness.
+
+## Platform Popularity
+To see the platform that favors the most popular tracks, we can create a simple bar graph for visualization.
+
+In this block of code, we first converted all the dataypes inside the playlists into integers to add them. We then proceed to use __matplotlib__ again to plot a bar graph for the data
+
+```python
+data['in_spotify_playlists'] = pd.to_numeric(data['in_spotify_playlists'], errors='coerce').fillna(0)
+data['in_deezer_playlists'] = pd.to_numeric(data['in_deezer_playlists'], errors='coerce').fillna(0)
+data['in_apple_playlists'] = pd.to_numeric(data['in_apple_playlists'], errors='coerce').fillna(0)
+
+spotify_count = data['in_spotify_playlists'].sum()
+deezer_count = data['in_deezer_playlists'].sum()
+apple_count = data['in_apple_playlists'].sum()
+
+platforms = ['Spotify', 'Deezer', 'Apple']
+track_counts = [spotify_count, deezer_count, apple_count]
+
+plt.figure(figsize=(20, 5))
+plt.bar(platforms, track_counts, color='lightpink', width=0.2)
+plt.title("Track Counts of Spotifty, Deezer, and Apple Playlists", color='hotpink', fontweight='bold')
+plt.xlabel("Platforms", color='lightpink')
+plt.ylabel("Total Track Counts", color='lightpink')
+plt.xticks(fontsize=14, fontweight='bold', color='hotpink')
+plt.yticks(fontsize=14, fontweight='bold', color='hotpink')
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/fb66aed3-a248-474b-af65-faad50ea1911)
+
+### Summary
+As can be seen in the graph above, the platform that favors the most popular tracks is __Spotify__. This is most probably because of Spotify's catering of other services such as audiobooks and podcasts rather than just music all in one app.
 
 
